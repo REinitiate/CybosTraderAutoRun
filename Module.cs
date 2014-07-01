@@ -46,9 +46,18 @@ namespace CybosAutoLogin
 
             Module.Pause(5000);
 
-            IntPtr windowHandler = Module.FindWindowByName("대신증권 CYBOS FAMILY");            
-            windowHandler = Module.FindWindowByName("CYBOS Starter");
+            IntPtr windowHandler = Module.FindWindowByName("CYBOS Starter");
             mainWndHandler = windowHandler; // 메인 윈도우 핸들러 등록 (WinEventProc에서 사용해야되기 때문)
+
+            if (Module.CheckVirtualBtnClicked())
+            {
+                // 모의투자 버튼 눌러져 있음.
+            }
+            else
+            {
+                // 모의투자 버튼 눌러져 있지 않음. 눌러야함.
+                Module.ButtonClick(mainWndHandler, 327);
+            }
 
             Module.Pause(5000);
             Module.SetTextInEdit(windowHandler, 156, "REINEX4");
@@ -73,15 +82,7 @@ namespace CybosAutoLogin
     {
         
         bool isExecuting = false;
-        // FindWindow 사용을 위한 코드
-        
-
-        //sends a windows message to the specified window
-        
-
-        public static void Run()
-        {
-        }
+        // FindWindow 사용을 위한 코드       
 
         // 프로세스가 실행되고 있는지 판단하는 프로그램.
         public static bool CheckProcessIsRunning(string pcName)
@@ -99,6 +100,7 @@ namespace CybosAutoLogin
             return result;
         }
 
+        // 윈도우가 실행되고 있는지를 판단.
         public static bool CheckWindowIsExist(string windowName)
         {
             IntPtr intPtr = Module.FindWindowByName(windowName);
@@ -180,6 +182,7 @@ namespace CybosAutoLogin
             return;
         }
 
+        // 윈도우 좌표를 가져온다.
         public static Win32.Rect WindowPosisionByName(IntPtr wdwHandler)
         {
             Win32.Rect rect = new Win32.Rect();
@@ -187,6 +190,43 @@ namespace CybosAutoLogin
             return rect;
         }
     
+        // 모의투자 버튼이 눌려있는지를 판단.
+        public static bool CheckVirtualBtnClicked()
+        {
+            IntPtr windowHandler = Module.FindWindowByName("CYBOS Starter");
+            Win32.Rect rect = Module.WindowPosisionByName(windowHandler);
+            //Ut.Log("top:" + rect.Top + " left:" + rect.Left + " bottom:" + rect.Bottom + " right:" + rect.Right);
+
+            // 685, 715
+            // 6, 15
+
+            double argb = 0;
+            int counter = 0;
+
+            for (int i = 6; i < 16; i++)
+            {
+                for (int j = 685; j < 716; j++)
+                {
+                    int x = rect.Left + j;
+                    int y = rect.Top + i;
+                    argb = argb + Win32.GetPixelColor(x, y).ToArgb();
+                    counter++;
+                }
+            }
+
+            double avgPxl = argb / Convert.ToDouble(counter);
+
+            if (avgPxl < -9000000)
+            {
+                // avgPxl : -10287651 --> 모의투자버튼 눌러져 있음.
+                return true;
+            }
+            else
+            {
+                // avgPxl : -8949047 --> 모의투자버튼 눌러져 있지 않음
+                return false;
+            }
+        }
     }
 
     public class Win32
