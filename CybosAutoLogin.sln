@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CybosAutoLogin", "CybosAutoLogin.csproj", "{C6AFFDBD-7FA3-4E4A-8FED-AD6A9DFEE73A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CybosAutoLogin2", "..\CybosAutoLogin2\CybosAutoLogin2.csproj", "{93D7DCA6-3C5B-49ED-ABBA-85CF7593FB1D}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -15,10 +13,6 @@ Global
 		{C6AFFDBD-7FA3-4E4A-8FED-AD6A9DFEE73A}.Debug|x86.Build.0 = Debug|x86
 		{C6AFFDBD-7FA3-4E4A-8FED-AD6A9DFEE73A}.Release|x86.ActiveCfg = Release|x86
 		{C6AFFDBD-7FA3-4E4A-8FED-AD6A9DFEE73A}.Release|x86.Build.0 = Release|x86
-		{93D7DCA6-3C5B-49ED-ABBA-85CF7593FB1D}.Debug|x86.ActiveCfg = Debug|x86
-		{93D7DCA6-3C5B-49ED-ABBA-85CF7593FB1D}.Debug|x86.Build.0 = Debug|x86
-		{93D7DCA6-3C5B-49ED-ABBA-85CF7593FB1D}.Release|x86.ActiveCfg = Release|x86
-		{93D7DCA6-3C5B-49ED-ABBA-85CF7593FB1D}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
