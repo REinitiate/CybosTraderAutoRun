@@ -14,20 +14,6 @@ namespace CybosAutoLogin
     {
         IntPtr mainWndHandler;
 
-        void WinEventProc(IntPtr hWinEventHook, uint eventType,
-            IntPtr hwnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime)
-        {
-            IntPtr foregroundWinHandle = Win32.GetForegroundWindow();
-            //Do something (f.e check if that is the needed window)
-
-            if (hwnd == mainWndHandler)
-            {   
-                Module.ButtonClick(Win32.GetForegroundWindow(), 1);
-            }
-            Ut.Log(hwnd.ToString("X8") + "\t" + Win32.GetForegroundWindow().ToString("X8") + "\t" + hWinEventHook.ToString("X8"));
-
-        }
-
         public void Action()
         {
             Module.KillProcess();
@@ -66,13 +52,14 @@ namespace CybosAutoLogin
             Module.Pause(3000);
             Module.ButtonClick(windowHandler, 203);
 
-
+            Module.mainWndHander = mainWndHandler;
             IntPtr hhook = Win32.SetWinEventHook(Win32.EVENT_SYSTEM_FOREGROUND, Win32.EVENT_SYSTEM_FOREGROUND,
-                IntPtr.Zero, new Win32.WinEventDelegate(WinEventProc), 0, 0, Win32.WINEVENT_OUTOFCONTEXT);
+                IntPtr.Zero, new Win32.WinEventDelegate(Module.WinEventProc), 0, 0, Win32.WINEVENT_OUTOFCONTEXT);
 
             Module.Pause(10000);
 
             Ut.Log(System.Diagnostics.Process.GetCurrentProcess().MainWindowHandle.ToString("X8"));
+            
         }
     }
 
@@ -80,6 +67,7 @@ namespace CybosAutoLogin
 
     class Module
     {
+        public static IntPtr mainWndHander;
         
         bool isExecuting = false;
         // FindWindow 사용을 위한 코드       
@@ -226,6 +214,20 @@ namespace CybosAutoLogin
                 // avgPxl : -8949047 --> 모의투자버튼 눌러져 있지 않음
                 return false;
             }
+        }
+
+
+        public static void WinEventProc(IntPtr hWinEventHook, uint eventType,
+            IntPtr hwnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime)
+        {
+            IntPtr foregroundWinHandle = Win32.GetForegroundWindow();
+            //Do something (f.e check if that is the needed window)
+
+            if (hwnd == mainWndHander)
+            {
+                Module.ButtonClick(Win32.GetForegroundWindow(), 1);
+            }
+            Ut.Log(hwnd.ToString("X8") + "\t" + Win32.GetForegroundWindow().ToString("X8") + "\t" + hWinEventHook.ToString("X8"));
         }
     }
 

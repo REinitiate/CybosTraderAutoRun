@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CybosAutoLogin", "CybosAutoLogin.csproj", "{C6AFFDBD-7FA3-4E4A-8FED-AD6A9DFEE73A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CybosTraderAutoRun", "CybosTraderAutoRun.csproj", "{C6AFFDBD-7FA3-4E4A-8FED-AD6A9DFEE73A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

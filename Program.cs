@@ -15,7 +15,10 @@ namespace CybosAutoLogin
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());            
+
+            Form1 form1 = new Form1();
+            form1.Visible = false;
+            Application.Run(form1);            
         }
     }
 }

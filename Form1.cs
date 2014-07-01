@@ -24,7 +24,9 @@ namespace CybosAutoLogin
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            
+            Automation auto = new Automation();
+            auto.Action();
+            Application.Exit();
         }
 
         private void buttonGetColor_Click(object sender, EventArgs e)
