@@ -16,6 +16,9 @@ namespace CybosAutoLogin
 
         public void Action()
         {
+            string id = Setting.ReadIniValueByKey(@"C:\settings\cybos.ini", "id");
+            string password = Setting.ReadIniValueByKey(@"C:\settings\cybos.ini", "password");
+
             Module.KillProcess();
             Module.Pause(3000);
 
@@ -46,9 +49,9 @@ namespace CybosAutoLogin
             }
 
             Module.Pause(5000);
-            Module.SetTextInEdit(windowHandler, 156, "REINEX4");
+            Module.SetTextInEdit(windowHandler, 156, id);
             Module.Pause(3000);
-            Module.SetTextInEdit(windowHandler, 157, "TURTLE");
+            Module.SetTextInEdit(windowHandler, 157, password);
             Module.Pause(3000);
             Module.ButtonClick(windowHandler, 203);
 
