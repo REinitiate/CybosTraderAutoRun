@@ -13,3 +13,12 @@ C:\Workspace_vs\CybusTraderAutoRun\bin\Debug\CybosAutoLogin.pdb
 C:\Workspace_vs\CybusTraderAutoRun\obj\x86\Debug\CybosAutoLogin.Form1.resources
 C:\Workspace_vs\CybusTraderAutoRun\obj\x86\Debug\CybosAutoLogin.Properties.Resources.resources
 C:\Workspace_vs\CybusTraderAutoRun\obj\x86\Debug\CybosTraderAutoRun.csproj.GenerateResource.Cache
+C:\Users\REinitiate\Dropbox\VisualStudio WorkSpace\CybosTraderAutoRun\bin\Debug\CybosAutoLogin.exe.config
+C:\Users\REinitiate\Dropbox\VisualStudio WorkSpace\CybosTraderAutoRun\bin\Debug\CybosAutoLogin.exe
+C:\Users\REinitiate\Dropbox\VisualStudio WorkSpace\CybosTraderAutoRun\bin\Debug\CybosAutoLogin.pdb
+C:\Users\REinitiate\Dropbox\VisualStudio WorkSpace\CybosTraderAutoRun\obj\x86\Debug\CybosTraderAutoRun.csprojResolveAssemblyReference.cache
+C:\Users\REinitiate\Dropbox\VisualStudio WorkSpace\CybosTraderAutoRun\obj\x86\Debug\CybosAutoLogin.Form1.resources
+C:\Users\REinitiate\Dropbox\VisualStudio WorkSpace\CybosTraderAutoRun\obj\x86\Debug\CybosAutoLogin.Properties.Resources.resources
+C:\Users\REinitiate\Dropbox\VisualStudio WorkSpace\CybosTraderAutoRun\obj\x86\Debug\CybosTraderAutoRun.csproj.GenerateResource.Cache
+C:\Users\REinitiate\Dropbox\VisualStudio WorkSpace\CybosTraderAutoRun\obj\x86\Debug\CybosAutoLogin.exe
+C:\Users\REinitiate\Dropbox\VisualStudio WorkSpace\CybosTraderAutoRun\obj\x86\Debug\CybosAutoLogin.pdb

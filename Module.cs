@@ -20,7 +20,7 @@ namespace CybosAutoLogin
             string password = Setting.ReadIniValueByKey(@"C:\settings\cybos.ini", "password");
 
             Module.KillProcess();
-            Module.Pause(3000);
+            Module.Pause(2000);
 
             System.Diagnostics.Process.Start(@"C:\DAISHIN\STARTER\ncStarter.exe", "/prj:cp");
 
@@ -33,10 +33,12 @@ namespace CybosAutoLogin
                 Module.ButtonClick(Module.FindWindowByName("대신증권 CYBOS FAMILY"), 6);
             };
 
-            Module.Pause(5000);
+            Module.Pause(2000);
 
             IntPtr windowHandler = Module.FindWindowByName("CYBOS Starter");
             mainWndHandler = windowHandler; // 메인 윈도우 핸들러 등록 (WinEventProc에서 사용해야되기 때문)
+
+            Ut.Log("메인핸들러 : " + mainWndHandler.ToString("X8"));
 
             if (Module.CheckVirtualBtnClicked())
             {
@@ -48,18 +50,34 @@ namespace CybosAutoLogin
                 Module.ButtonClick(mainWndHandler, 327);
             }
 
-            Module.Pause(5000);
-            Module.SetTextInEdit(windowHandler, 156, id);
-            Module.Pause(3000);
-            Module.SetTextInEdit(windowHandler, 157, password);
-            Module.Pause(3000);
-            Module.ButtonClick(windowHandler, 203);
-
             Module.mainWndHander = mainWndHandler;
-            IntPtr hhook = Win32.SetWinEventHook(Win32.EVENT_SYSTEM_FOREGROUND, Win32.EVENT_SYSTEM_FOREGROUND,
-                IntPtr.Zero, new Win32.WinEventDelegate(Module.WinEventProc), 0, 0, Win32.WINEVENT_OUTOFCONTEXT);
+            Ut.Log("메인핸들러 : " + mainWndHandler.ToString("X8"));
 
-            Module.Pause(10000);
+            //IntPtr hhook = Win32.SetWinEventHook(Win32.EVENT_SYSTEM_FOREGROUND, Win32.EVENT_SYSTEM_FOREGROUND,
+            //   IntPtr.Zero, new Win32.WinEventDelegate(Module.WinEventProc), 0, 0, Win32.WINEVENT_OUTOFCONTEXT);
+
+            Module.Pause(2000);
+            Module.SetTextInEdit(windowHandler, 156, id);
+            Module.Pause(500);
+            Module.SetTextInEdit(windowHandler, 157, password);
+            Module.Pause(500);
+            Module.ButtonClick(windowHandler, 203);
+            Module.Pause(20000);
+
+            Win32.Rect rec = Module.WindowPosisionByName(mainWndHandler);
+            rec.Top = rec.Top + 128 + 10;
+            rec.Left = rec.Left + 492 + 10;
+
+            Win32.POINT p = new Win32.POINT();
+            p.x = rec.Left;
+            p.y = rec.Top;
+
+            Win32.SetCursorPos(p.x, p.y);
+            Win32.SetCursorPos(p.x, p.y);
+            
+            Module.Click(rec);
+            Module.Click(rec);
+            Module.Click(rec);
 
             Ut.Log(System.Diagnostics.Process.GetCurrentProcess().MainWindowHandle.ToString("X8"));
             
@@ -143,7 +161,7 @@ namespace CybosAutoLogin
         // 인풋 시간만큼 대기(milliseonds)
         public static void Pause(int milliseconds)
         {
-            Ut.Log(milliseconds.ToString() + "초 동안 대기");
+            Ut.Log((milliseconds/1000).ToString() + "초 동안 대기");
             System.Threading.Thread.Sleep(milliseconds);
 
             return;
@@ -219,13 +237,21 @@ namespace CybosAutoLogin
             }
         }
 
+        // 해당 좌표에 클릭 버튼
+        public static bool Click(Win32.Rect location)
+        {
+            Ut.Log("X : " + location.Left + " Y : " + location.Top + " 에 클릭");
+
+            Win32.mouse_event(Win32.MOUSEEVENTF_LEFTDOWN, (uint)location.Left, (uint)location.Top, 0, new IntPtr());
+            Win32.mouse_event(Win32.MOUSEEVENTF_LEFTUP, (uint)location.Left, (uint)location.Top, 0, new IntPtr());
+            return true;
+        }
 
         public static void WinEventProc(IntPtr hWinEventHook, uint eventType,
             IntPtr hwnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime)
         {
-            IntPtr foregroundWinHandle = Win32.GetForegroundWindow();
+            IntPtr foregroundWinHandle = Win32.GetForegroundWindow();            
             //Do something (f.e check if that is the needed window)
-
             if (hwnd == mainWndHander)
             {
                 Module.ButtonClick(Win32.GetForegroundWindow(), 1);
@@ -326,8 +352,7 @@ namespace CybosAutoLogin
 
             return String.Empty;
         }
-
-
+        
         [DllImport("user32")]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool EnumChildWindows(IntPtr window, EnumWindowProc callback, IntPtr i);
@@ -399,5 +424,26 @@ namespace CybosAutoLogin
         //The GetForegroundWindow function returns a handle to the foreground window.
         [DllImport("user32.dll")]
         public static extern IntPtr GetForegroundWindow();
+
+        // 마우스 관련 ****************************************************
+        public const UInt32 MOUSEEVENTF_LEFTDOWN = 0x0002;
+        public const UInt32 MOUSEEVENTF_LEFTUP = 0x0004;
+        
+
+        [DllImport("User32.Dll")]
+        public static extern long SetCursorPos(int x, int y);
+
+        [DllImport("User32.Dll")]
+        public static extern bool ClientToScreen(IntPtr hWnd, ref POINT point);
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct POINT
+        {
+            public int x;
+            public int y;
+        }
+
+        [DllImport("user32.dll")]
+        public static extern void mouse_event(UInt32 dwFlags, UInt32 dx, UInt32 dy, UInt32 dwData, IntPtr dwExtraInfo);    
     }
 }
